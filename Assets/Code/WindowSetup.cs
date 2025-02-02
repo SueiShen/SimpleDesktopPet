@@ -35,6 +35,7 @@ public class WindowSetup : MonoBehaviour
 
     private IntPtr hWnd;
 
+    private GameObject MainCamera;
     private void Start()
     {
 #if !UNITY_EDITOR
@@ -46,11 +47,13 @@ public class WindowSetup : MonoBehaviour
         // 設置視窗可透明 + 允許點擊穿透
         SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
 
-        // 設定 RGB(255, 0, 255) 為透明色，確保 Unity 背景設為這個顏色
-        SetLayeredWindowAttributes(hWnd, 0x00FF00FF, 0, LWA_COLORKEY);
+        // 設定 RGB(0, 255, 0)綠幕 為透明色，確保 Unity 背景設為這個顏色
+        SetLayeredWindowAttributes(hWnd, 0x0000FF00, 0, LWA_COLORKEY);
 
         // 確保視窗保持在最上層
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
+#else
+    Camera.main.backgroundColor = Color.black;
 #endif
 
         Application.runInBackground = true;
