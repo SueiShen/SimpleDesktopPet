@@ -10,7 +10,7 @@ public class Mediator : MonoBehaviour
     private SpriteController SpriteController;
     private Transform EntityAudio;
     private VoiceController VoiceController;
-    private Transform DailogAudio;
+    private Transform EntityDailogCanvas;
     private EntityDailogController EntityDailogController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,8 +20,8 @@ public class Mediator : MonoBehaviour
         SpriteController = Entity.GetComponent<SpriteController>();
         Transform EntityAudio = transform.Find("EntityAudio");
         VoiceController = EntityAudio.GetComponent<VoiceController>();
-        Transform DailogAudio = transform.Find("DailogAudio");
-        EntityDailogController = DailogAudio.GetComponent<EntityDailogController>();
+        Transform EntityDailogCanvas = transform.Find("EntityDailogCanvas");
+        EntityDailogController = EntityDailogCanvas.GetComponent<EntityDailogController>();
     }
 
     // Update is called once per frame
