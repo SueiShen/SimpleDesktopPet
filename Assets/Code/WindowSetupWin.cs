@@ -53,8 +53,16 @@ public class WindowSetupWin : MonoBehaviour
         // 確保視窗保持在最上層
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
 #else
-    Camera.main.backgroundColor = Color.black;
+        Camera.main.backgroundColor = Color.black;
 #endif
         Application.runInBackground = true;
+    }
+    void OnApplicationQuit()
+    {
+        Debug.Log("Application is quitting...");
+        Application.runInBackground = false;
+        SetWindowLong(hWnd, GWL_EXSTYLE, 0);
+        Application.Quit();
+        System.Diagnostics.Process.GetCurrentProcess().Kill(); // 強制關閉
     }
 }
