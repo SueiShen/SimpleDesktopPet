@@ -47,10 +47,10 @@ public class WindowSetupWin : MonoBehaviour
         DwmExtendFrameIntoClientArea(hWnd, ref margins);
 
         // 設置視窗可透明 + 允許點擊穿透
-        SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
+        SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
 
-        // 設定 RGB(254, 254, 254)(FEFEFE)特殊白幕 為透明色，確保 Unity 背景設為這個顏色
-        SetLayeredWindowAttributes(hWnd, 0x00FFFFFF, 0, LWA_COLORKEY);
+        // 設定 RGB(0,0,0)黑幕 為透明色，確保 Unity 背景設為這個顏色
+        //SetLayeredWindowAttributes(hWnd, 0, 0, LWA_COLORKEY);
 
         // 確保視窗保持在最上層
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
@@ -59,15 +59,33 @@ public class WindowSetupWin : MonoBehaviour
 #endif
         Application.runInBackground = true;
     }
-
+#if !UNITY_EDITOR
+    private void Update()
+    {
+        SetClickThrought(!IsMouseOverCollider());
+    }
+    private void SetClickThrought(bool ClickThrought)
+    {
+        if(ClickThrought)
+        {
+            SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+        }else{
+            SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
+        }
+    }
+    private bool IsMouseOverCollider()
+    {
+    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
+    
+    return hitCollider != null; // 若 `hitCollider` 存在，代表滑鼠指向某個 `Collider2D`
+    }
     void OnApplicationQuit()
     {
-#if !UNITY_EDITOR
-        Debug.Log("Application is quitting...");
         Application.runInBackground = false;
         SetWindowLong(hWnd, GWL_EXSTYLE, 0);
         Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill(); // 強制關閉
-#endif
     }
+#endif
 }
