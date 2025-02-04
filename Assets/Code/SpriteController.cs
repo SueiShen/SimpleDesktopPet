@@ -38,7 +38,14 @@ public class SpriteController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("找不到圖片：" + filePath);
+            byte[] imageBytes = File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath,"SpriteError.png"));
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(imageBytes); // 將 PNG 轉換為 Texture2D
+            Sprite spritetexture = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            SpriteRenderer.sprite = spritetexture; // 套用到 3D 物件的材質上
+            float Scale = EntityWidth/texture.width;
+            transform.localScale = new Vector3(Scale,Scale,1);
+            //transform.localPosition = new Vector3(texture.width*Scale/2)
         }
     }
 }
