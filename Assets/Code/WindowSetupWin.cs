@@ -6,6 +6,7 @@ using System;
 
 public class WindowSetupWin : MonoBehaviour
 {
+#if !UNITY_EDITOR
     private struct MARGINS
     {
         public int cxLeftWidth, cxRightWidth, cyTopHeight, cyBottomHeight;
@@ -36,6 +37,7 @@ public class WindowSetupWin : MonoBehaviour
     private IntPtr hWnd;
 
     private GameObject MainCamera;
+#endif
     private void Start()
     {
 #if !UNITY_EDITOR
@@ -53,16 +55,19 @@ public class WindowSetupWin : MonoBehaviour
         // 確保視窗保持在最上層
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
 #else
-        Camera.main.backgroundColor = Color.black;
+        Camera.main.backgroundColor = Color.gray;
 #endif
         Application.runInBackground = true;
     }
+
     void OnApplicationQuit()
     {
+#if !UNITY_EDITOR
         Debug.Log("Application is quitting...");
         Application.runInBackground = false;
         SetWindowLong(hWnd, GWL_EXSTYLE, 0);
         Application.Quit();
         System.Diagnostics.Process.GetCurrentProcess().Kill(); // 強制關閉
+#endif
     }
 }

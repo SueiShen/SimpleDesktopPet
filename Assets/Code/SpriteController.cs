@@ -5,13 +5,15 @@ public class SpriteController : MonoBehaviour
 {
     private Mediator Mediator;
     private SpriteRenderer SpriteRenderer;
+    public int ScaleRatio = 5;
     private float EntityWidth;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Mediator = GetComponentInParent<Mediator>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
-        EntityWidth = Screen.height/4;
+        EntityWidth = Screen.height/ScaleRatio;
         SpriteChange();
     }
 
