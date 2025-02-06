@@ -39,9 +39,20 @@ public class SpriteController : MonoBehaviour
         SpriteRenderer.sprite = spritetexture; // 套用到 3D 物件的材質上
         BoxCollider2D.size = SpriteRenderer.sprite.bounds.size;
         BoxCollider2D.offset = SpriteRenderer.sprite.bounds.center;
-        float Scale = EntityWidth / texture.width;
+        float Scale = 1;
+        //Scale = EntityWidth / texture.width;
+        
+        if (texture.height > texture.width)
+        {
+            Scale = EntityWidth / texture.height;
+        }
+        else
+        {
+            Scale = (EntityWidth / texture.width)/1.5f;
+        }
         transform.localScale = new Vector3(Scale, Scale, 1);
-        //transform.localPosition = new Vector3(texture.width*Scale/2)
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-(EntityWidth/2), (EntityWidth/2)+(Screen.height*0.05f), Camera.main.nearClipPlane));
+        transform.localPosition = new Vector3(worldPos.x, worldPos.y, 0);
 
 
     }

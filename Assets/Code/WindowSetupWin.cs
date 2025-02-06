@@ -54,6 +54,8 @@ public class WindowSetupWin : MonoBehaviour
 
         // 確保視窗保持在最上層
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
+        //Screen.fullScreenMode = FullScreenMode.Windowed;
+        //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
 #else
         Camera.main.backgroundColor = Color.gray;
 #endif

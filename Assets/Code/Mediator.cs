@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Mediator : MonoBehaviour
@@ -6,8 +7,11 @@ public class Mediator : MonoBehaviour
     public string Sprite = "N01";
     public string Voice = "";
     public string Dailog = "";
+    public float Xpos = 0;
+    public float Ypos = 0;
     private Transform Entity;
     private SpriteController SpriteController;
+    private BoxCollider2D BoxCollider2D;
     private Transform EntityAudio;
     private VoiceController VoiceController;
     private Transform EntityDailogCanvas;
@@ -18,6 +22,7 @@ public class Mediator : MonoBehaviour
     {
         Transform Entity = transform.Find("Entity");
         SpriteController = Entity.GetComponent<SpriteController>();
+        BoxCollider2D = Entity.GetComponent<BoxCollider2D>();
         Transform EntityAudio = transform.Find("EntityAudio");
         VoiceController = EntityAudio.GetComponent<VoiceController>();
         Transform EntityDailogCanvas = transform.Find("EntityDailogCanvas");
@@ -27,6 +32,11 @@ public class Mediator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Entity == null)
+        {
+            Entity = transform.Find("Entity");
+        }
+        Xpos = Entity.localPosition.x;
+        Ypos = Entity.localPosition.y;
     }
 }

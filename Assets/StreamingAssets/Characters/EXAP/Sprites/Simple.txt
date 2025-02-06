@@ -1,0 +1,1 @@
+自然N(Neutral)、喜悅H(Happiness)、憤怒A(Anger)、悲傷S(Sadness)、恐懼F(Fear)、厭惡D(Disgust)、驚奇W(Wow 因為Surprise的S被用了)、其他O(Other)
