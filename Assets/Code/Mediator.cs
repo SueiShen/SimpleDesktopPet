@@ -14,7 +14,7 @@ public class Mediator : MonoBehaviour
     private BoxCollider2D BoxCollider2D;
     private Transform EntityAudio;
     private VoiceController VoiceController;
-    private Transform EntityDailogCanvas;
+    private Transform EntityDailog;
     private EntityDailogController EntityDailogController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,8 +25,8 @@ public class Mediator : MonoBehaviour
         BoxCollider2D = Entity.GetComponent<BoxCollider2D>();
         Transform EntityAudio = transform.Find("EntityAudio");
         VoiceController = EntityAudio.GetComponent<VoiceController>();
-        Transform EntityDailogCanvas = transform.Find("EntityDailogCanvas");
-        EntityDailogController = EntityDailogCanvas.GetComponent<EntityDailogController>();
+        Transform EntityDailog = transform.Find("EntityDailog");
+        EntityDailogController = EntityDailog.GetComponent<EntityDailogController>();
     }
 
     // Update is called once per frame

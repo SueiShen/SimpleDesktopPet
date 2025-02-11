@@ -1,16 +1,26 @@
+using TMPro;
 using UnityEngine;
 
 public class EntityDailogController : MonoBehaviour
 {
+    private Mediator Mediator;
+    private Transform DailogBox;
+    private TextMeshPro DailogText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Mediator = GetComponentInParent<Mediator>();
+        DailogBox = transform.Find("DailogBox");
+        DailogText = transform.Find("DailogText").GetComponent<TextMeshPro>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        DailogBox.transform.localPosition = new Vector3(Mediator.Xpos,Mediator.Ypos,0);
+    }
+    void SetText(){
 
     }
     /*
