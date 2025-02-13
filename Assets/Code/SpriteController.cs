@@ -7,7 +7,7 @@ public class SpriteController : MonoBehaviour
     private Mediator Mediator;
     private SpriteRenderer SpriteRenderer;
     private BoxCollider2D BoxCollider2D;
-    public int ScaleRatio = 5;
+    private float ScaleRatio;
     private float EntityWidth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,7 +16,7 @@ public class SpriteController : MonoBehaviour
         Mediator = GetComponentInParent<Mediator>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider2D = GetComponent<BoxCollider2D>();
-        EntityWidth = Screen.height / ScaleRatio;
+        EntityWidth = Screen.height / Mediator.ScaleRatio;
         SpriteChange();
     }
 
@@ -41,19 +41,23 @@ public class SpriteController : MonoBehaviour
         BoxCollider2D.offset = SpriteRenderer.sprite.bounds.center;
         float Scale = 1;
         //Scale = EntityWidth / texture.width;
-        
+        //Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - (EntityWidth / 2), (EntityWidth / 2) + (Screen.height * 0.05f), Camera.main.nearClipPlane))
         if (texture.height > texture.width)
         {
             Scale = EntityWidth / texture.height;
+            Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(1-((EntityWidth/Screen.height)/2), 0.05f+(EntityWidth/2/Screen.height), Camera.main.nearClipPlane));
+            transform.localPosition = new Vector3(worldPos.x, worldPos.y, 0);
         }
         else
         {
             Scale = (EntityWidth / texture.width)/1.5f;
+            Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(1-((EntityWidth/Screen.height)/2), 0.05f+((EntityWidth+EntityWidth*(1-(1/1.5f)))/2/Screen.height), Camera.main.nearClipPlane));
+            transform.localPosition = new Vector3(worldPos.x, worldPos.y, 0);
         }
         transform.localScale = new Vector3(Scale, Scale, 1);
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-(EntityWidth/2), (EntityWidth/2)+(Screen.height*0.05f), Camera.main.nearClipPlane));
-        transform.localPosition = new Vector3(worldPos.x, worldPos.y, 0);
-
+        Debug.Log(Screen.height);
+        Debug.Log(texture.width);
+        Debug.Log(1-((EntityWidth/Screen.width)/2));
 
     }
 }
