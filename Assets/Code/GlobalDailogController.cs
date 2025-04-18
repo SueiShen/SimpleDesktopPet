@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.IO;
 using Unity.VisualScripting;
 //using UnityEditor.Playables;
 using UnityEngine;
+using System.Linq;
 
 public class GlobalDailogController : MonoBehaviour
 {
     public int DailogTurn = 0;
+    public float DailogSpeed = 4;
     private string[] lines;
     private string Clear = "GLOB|N01||";
     public delegate void SentDailog(string message);
@@ -32,11 +35,12 @@ public class GlobalDailogController : MonoBehaviour
         {
             OnMessageReceived?.Invoke(lines[DailogTurn]);
             //Debug.Log(lines[DailogTurn]);
-            DailogTurn += 1;  // 增加對話回合數
             Debug.Log("DialogTurn: " + DailogTurn);
-
+            string[] SplitMessage = lines[DailogTurn].Split(new string[] { "|" }, System.StringSplitOptions.None);
             // 等待5秒後繼續執行
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(SplitMessage[3].Length/DailogSpeed);
+
+            DailogTurn += 1;  // 增加對話回合數
         }
         DailogTurn = 0;
         lines = new string[0];
@@ -52,7 +56,7 @@ public class GlobalDailogController : MonoBehaviour
                 // 讀取檔案內容
                 string fileContent = File.ReadAllText(filePath);
                 Debug.Log(fileContent);
-                lines = fileContent.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None); ;
+                lines = fileContent.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
                 StartCoroutine(DailogTurnCount(lines.Length));
                 /*
                 while(DailogTurn<=lines.Length)
@@ -67,6 +71,38 @@ public class GlobalDailogController : MonoBehaviour
                 Debug.LogError("File not found at: " + filePath);
             }
         }
+    }
+    public void ShortDailog(string filePath)
+    {
+        if (DailogTurn == 0)
+        {
+            if (File.Exists(filePath))
+            {
+                // 讀取檔案內容
+                string fileContent = File.ReadAllText(filePath);
+                Debug.Log(fileContent);
+                lines = fileContent.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
+                if (lines.Length > 0)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, lines.Length);
+                    string selectedLine = lines[randomIndex];
 
+                    // 把原本陣列直接改掉，只留選中的那一句
+                    lines = new string[] { selectedLine };
+                }
+                StartCoroutine(DailogTurnCount(lines.Length));
+                /*
+                while(DailogTurn<=lines.Length)
+                {
+                    Mediator.GetDailog(lines[DailogTurn]);
+                    Debug.Log(lines[DailogTurn]);
+                }
+                */
+            }
+            else
+            {
+                Debug.LogError("File not found at: " + filePath);
+            }
+        }
     }
 }

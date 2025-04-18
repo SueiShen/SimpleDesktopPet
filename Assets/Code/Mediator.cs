@@ -49,7 +49,7 @@ public class Mediator : MonoBehaviour
     void GetDailog(string message)
     {
         //Debug.Log("Got : " + message);
-        string[] GotMessage = message.Split(new string[] { "|" }, System.StringSplitOptions.None); ;
+        string[] GotMessage = message.Split(new string[] { "|" }, System.StringSplitOptions.None);
         if (GotMessage[0] == "GLOB" || GotMessage[0] ==Character)
         {
             Debug.Log(Character + "Got : " + message);

@@ -55,9 +55,9 @@ public class SpriteController : MonoBehaviour
             transform.localPosition = new Vector3(worldPos.x, worldPos.y, 0);
         }
         transform.localScale = new Vector3(Scale, Scale, 1);
-        Debug.Log(Screen.height);
-        Debug.Log(texture.width);
-        Debug.Log(1-((EntityWidth/Screen.width)/2));
+        //Debug.Log(Screen.height);
+        //Debug.Log(texture.width);
+        //Debug.Log(1-((EntityWidth/Screen.width)/2));
 
     }
 }

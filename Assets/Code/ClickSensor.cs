@@ -32,6 +32,7 @@ else
         // 當滑鼠點擊到這個物件時執行的代碼
         Debug.Log("Mouse Clicked on: " + Mediator.Character);
         //"C:\Users\pTATq\Downloads\BnR\SimpleDesktopPet_Data\StreamingAssets\Characters\TIMK\Dialog\LongLog\LongLog1.txt"
-        GlobalDailogController.LongDailog(Path.Combine(Application.streamingAssetsPath,"Characters/TIMK/Dialog/LongLog/LongLog1.txt"));
+        GlobalDailogController.LongDailog(Path.Combine(Application.streamingAssetsPath,"Characters/"+Mediator.Character+"/Dialog/showcase.txt"));
+        //GlobalDailogController.ShortDailog(Path.Combine(Application.streamingAssetsPath,"Characters/TIMK/Dialog/Idle.txt"));
     }
 }

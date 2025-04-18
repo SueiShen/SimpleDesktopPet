@@ -32,7 +32,9 @@ public class EntityDailogController : MonoBehaviour
         texture.LoadImage(imageBytes); // 將 PNG 轉換為 Texture2D
         Sprite spritetexture = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.width * 0.3f), new Vector2(0.5f, 0.5f));
         SpriteRenderer.sprite = spritetexture; // 套用到 3D 物件的材質上
-        transform.localScale = new Vector3(EntityWidth / texture.width, EntityWidth / texture.width, 1);
+        //DailogText.transform.localScale = new Vector3((float)0.54, (float)0.54, 1);
+        DailogBox.localScale = new Vector3(EntityWidth / texture.width, EntityWidth / texture.width, 1);
+
     }
 
     // Update is called once per frame
